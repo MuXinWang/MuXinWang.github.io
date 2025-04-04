@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Space Pro</title>
+    <style>
+        :root {
+            --primary-bg: #0a0a0a;
+            --card-bg: rgba(30, 30, 40, 0.92);
+            --accent: #00ff9d;
+            --text-primary: rgba(255, 255, 255, 0.92);
+            --grid-gap: 1.5rem;
+            --blur-intensity: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        body {
+            background: 
+                linear-gradient(45deg, rgba(10,10,10,0.9), rgba(20,20,30,0.8)),
+                url('img/1.png') center/cover fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            grid-auto-rows: min-content;
+            align-items: start;
+            gap: var(--grid-gap);
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* 统一卡片尺寸 */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            min-height: 400px; /* 统一最小高度 */
+        }
+
+        /* 头像尺寸优化 */
+        .avatar {
+            width: 100%;
+            height: 180px; /* 调整为更合适的尺寸 */
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        /* 音乐播放器优化 */
+        .music-card {
+            height: fit-content;
+            min-height: auto; /* 取消固定高度 */
+        }
+
+        .player-interface {
+            margin-top: 1rem;
+        }
+
+        audio {
+            width: 100%;
+            height: 40px; /* 统一播放器高度 */
+        }
+
+        /* 文章内容交互优化 */
+        .article-preview {
+            cursor: pointer;
+            padding: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .full-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: 
+                max-height 0.6s ease,
+                opacity 0.4s ease;
+        }
+
+        .expanded .full-content {
+            max-height: 2000px;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-grid">
+        <!-- 左侧个人简介 -->
+        <div class="card profile-card">
+            <img src="img/avatar.png" class="avatar" alt="个人头像">
+            <h2>Muxin</h2>
+            <h3>C/Assembly/...</h3>
+            <p>---冲浪爱好者---</p>
+            <p>联系邮箱：hoogjj520@tutamail.com</p>
+        </div>
+
+        <!-- 中间博客内容 -->
+        <div class="card blog-card">
+            <article>
+                <div class="article-preview" onclick="toggleArticle(this)">
+                    <h1>公告</h1>
+                    <p class="meta">2025年4月4日 • 阅读时间3分钟</p>
+                    <div class="preview-text">有关这里的所有东西</div>
+                    <div class="full-content">
+                        <p>我就是一个业余的互联网游民，手里有点数据（互联网搜集）会点技术（会利用公开漏洞和POC🤣），技术文章会不定时更新（除非有人看，快手：4496736283），这个博客也就这么多内容了，重要事情会更新（用DeepSeek偷懒🤣），就写这么多吧，用Github上线（穷逼买不起服务器啊啊啊😢）</p>
+                    </div>
+                </div>
+                <div class="article-preview" onclick="toggleArticle(this)">
+                    <h1>知识</h1>
+                    <p class="meta">2025年4月4日 • 阅读时间3分钟</p>
+                    <div class="preview-text">黑客大手子基础知识（中国全境）</div>
+                    <div class="full-content">
+                        <p>《中华人民共和国网络安全法》是为了保障网络安全，维护网络空间主权和国家安全、社会公共利益，保护公民、法人和其他组织的合法权益，促进经济社会信息化健康发展，制定的法律，对中国网络空间法治化建设具有重要意义。 [2] [6]
+                            2025年3月8日，《2025年全国人民代表大会常务委员会工作报告》提出，将围绕健全社会主义市场经济法律制度，修改网络安全法 [7]。3月28日，国家互联网信息办公室发布《中华人民共和国网络安全法（修正草案再次征求意见稿）》，向社会公开征求意见，意见反馈截止时间为2025年4月27日
+                        ---知识来源于百度百科</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- 右侧音乐卡片 -->
+        <div class="card music-card">
+            <h3>音乐播放器</h3>
+            <div class="player-interface">
+                <audio controls>
+                    <source src="audio/1.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 文章展开功能
+        function toggleArticle(element) {
+            const article = element.closest('.article-preview');
+            article.classList.toggle('expanded');
+        }
+
+        // 优化卡片悬停动画
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                card.style.transform = `
+                    perspective(1000px)
+                    rotateX(${(y - rect.height/2) / 30}deg)
+                    rotateY(${-(x - rect.width/2) / 30}deg)
+                `;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
